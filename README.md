@@ -30,3 +30,10 @@ Except the original events, there's a two new ones:
 * __`reconnectFailed`__ when reconnect reached reconnectTimes 
 
 > __important__: every successful reconnect will also emit __`'connect'`__ event by net.Socket, so plan your client.on('connect', function(){}) callbacks
+
+## Installation
+```
+npm install net-socket-reconnect
+```
+---
+MIT License
