@@ -25,7 +25,7 @@ net.connect= net.createConnection= function()
 	var reconnectOnEnd= arguments.reconnectOnEnd || false
 	var reconnectOnClose= arguments.reconnectOnClose || true
 	var reconnectOnTimeout= arguments.reconnectOnTimeout || false
-	var reconnectOnInit= arguments.reconnectOnCreate || false
+	var reconnectOnCreate= arguments.reconnectOnCreate || false
 	var reconnectInterval= arguments.reconnectInterval || 300
 	var reconnectTimes= arguments.reconnectTimes || 20
 
