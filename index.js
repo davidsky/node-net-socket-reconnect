@@ -18,7 +18,7 @@ function normalizeConnectArgs(args)
 module.exports= function()
 {
 	var args= normalizeConnectArgs(arguments)
-	var socket= net.connect.apply(null, args)
+	var socket= net.connect(args)
 
 	var reconnectOnError= args.reconnectOnError || false
 	var reconnectOnEnd= args.reconnectOnEnd || false
@@ -27,7 +27,6 @@ module.exports= function()
 	var reconnectOnCreate= args.reconnectOnCreate || false
 	var reconnectInterval= args.reconnectInterval || 300
 	var reconnectTimes= args.reconnectTimes || 20
-	// var reconnectBacklog= args.reconnectBacklog || 1024
 
 	var previouslyConnected= false
 	var reconnectFailed= false
