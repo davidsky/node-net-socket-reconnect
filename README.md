@@ -11,7 +11,7 @@ var client= net.connect({port: 8080, reconnectInterval: 150}) // no change to or
 * __`reconnectOnEnd`__ reconnect on 'end', default false
 * __`reconnectOnClose`__ reconnect on 'close', default true
 * __`reconnectOnTimeout`__ reconnect on 'timeout', default false
-* __`reconnectOnInit`__ reconnect after initial connect failed, default false
+* __`reconnectOnCreate`__ reconnect after initial connect failed, default false
 * __`reconnectInterval`__ interval between tries, default 300
 * __`reconnectTimes`__ max retries, default 50
 
