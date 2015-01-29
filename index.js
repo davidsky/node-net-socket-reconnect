@@ -27,15 +27,33 @@ module.exports= function()
 	var reconnectOnCreate= args.reconnectOnCreate || false
 	var reconnectInterval= args.reconnectInterval || 300
 	var reconnectTimes= args.reconnectTimes || 20
+	// var reconnectBacklog= args.reconnectBacklog || 1024
 
 	var previouslyConnected= false
 	var reconnectFailed= false
 	var reconnectTries= 0
 	var canReconnect= true
 	var reconnecting
+	var backlog= []
+	var socketWrite
 	
+	function setWrite()
+	{
+		socketWrite= socket.write
+		socket.write= function()
+		{
+			if( socket.writable )
+				socketWrite.apply(socket, arguments)
+			else
+				backlog.push(arguments)
+		}
+	}
+	setWrite()
+
 	function reconnect(force)
 	{
+		setWrite()
+
 		if( !previouslyConnected && !reconnectOnCreate )
 			return
 		if( !force && !canReconnect )
@@ -64,7 +82,7 @@ module.exports= function()
 			return
 		reconnectFailed= true
 		socket.stopReconnect()
-		socket.emit('reconnectFailed')
+		socket.emit('reconnectFailed', backlog)
 	}
 	
 	function connect()
@@ -72,6 +90,16 @@ module.exports= function()
 		reconnectFailed= false
 		previouslyConnected= true
 		reconnectTries= 0
+			
+		setWrite()
+
+		if( backlog.length )
+		{
+			var arr= Array.prototype.slice.call(backlog)
+			backlog.length= 0
+			for(var i= 0, len= arr.length; len>i; ++i)
+				socket.write.apply(socket, arr[i])			
+		}
 	}
 
 	socket.getReconnect= function(){
