@@ -18,16 +18,16 @@ function normalizeConnectArgs(args)
 
 net.connect= net.createConnection= function()
 {
-	var socket= netConnect.apply(null, arguments)
-	var connectArgs= normalizeConnectArgs(arguments)
+	var args= normalizeConnectArgs(arguments)
+	var socket= netConnect.apply(null, args)
 
-	var reconnectOnError= arguments.reconnectOnError || false
-	var reconnectOnEnd= arguments.reconnectOnEnd || false
-	var reconnectOnClose= arguments.reconnectOnClose || true
-	var reconnectOnTimeout= arguments.reconnectOnTimeout || false
-	var reconnectOnCreate= arguments.reconnectOnCreate || false
-	var reconnectInterval= arguments.reconnectInterval || 300
-	var reconnectTimes= arguments.reconnectTimes || 20
+	var reconnectOnError= args.reconnectOnError || false
+	var reconnectOnEnd= args.reconnectOnEnd || false
+	var reconnectOnClose= args.reconnectOnClose || true
+	var reconnectOnTimeout= args.reconnectOnTimeout || false
+	var reconnectOnCreate= args.reconnectOnCreate || false
+	var reconnectInterval= args.reconnectInterval || 300
+	var reconnectTimes= args.reconnectTimes || 20
 
 	var previouslyConnected= false
 	var reconnectFailed= false
@@ -54,7 +54,7 @@ net.connect= net.createConnection= function()
 		socket.emit('reconnect')
 
 		reconnecting= setTimeout(function(){
-			socket.connect(connectArgs)
+			socket.connect(args)
 			reconnecting= 0
 		}, reconnectInterval)
 	}
