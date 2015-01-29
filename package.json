@@ -1,6 +1,6 @@
 {
   "name": "net-socket-reconnect",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "makes net.connect() and net.createConnection() auto reconnect",
   "main": "index.js",
   "scripts": {

@@ -1,7 +1,6 @@
 'use strict';
 
 var net= require('net')
-var netConnect= net.connect
 
 // from joyent/node/lib/net.js
 function normalizeConnectArgs(args)
@@ -16,10 +15,10 @@ function normalizeConnectArgs(args)
 	return options
 }
 
-net.connect= net.createConnection= function()
+module.exports= function()
 {
 	var args= normalizeConnectArgs(arguments)
-	var socket= netConnect.apply(null, args)
+	var socket= net.connect.apply(null, args)
 
 	var reconnectOnError= args.reconnectOnError || false
 	var reconnectOnEnd= args.reconnectOnEnd || false
