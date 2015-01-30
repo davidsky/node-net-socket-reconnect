@@ -2,7 +2,7 @@
 Makes net.connect() and net.createConnection() auto reconnect.
 ## Usage
 ```js
-var reconnect= require('net-reconnect')
+var reconnect= require('net-socket-reconnect')
 var client= reconnect({port: 8080, reconnectInterval: 150}) // no change to original API
 ```
 ## Options
