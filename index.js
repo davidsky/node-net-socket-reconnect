@@ -36,17 +36,22 @@ module.exports= function()
 	var backlog= []
 	var socketWrite
 	
+	function write()
+	{
+		if( socket.writable )
+			socketWrite.apply(socket, arguments)
+		else
+			backlog.push(arguments)
+	}
+
 	function setWrite()
 	{
-		socketWrite= socket.write
-		socket.write= function()
-		{
-			if( socket.writable )
-				socketWrite.apply(socket, arguments)
-			else
-				backlog.push(arguments)
+		if( socket.write!==write ){
+			socketWrite= socket.write
+			socket.write= write
 		}
 	}
+	
 	setWrite()
 
 	function reconnect(force)
